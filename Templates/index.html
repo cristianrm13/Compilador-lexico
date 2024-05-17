@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Compilador Léxico | UP</title>
+
+    <script>
+        function clearTable() {
+            document.getElementById("tokenTable").innerHTML = `
+                <tr>
+                    <th>TOKEN</th>
+                    <th>PR</th>
+                    <th>ID</th>
+                    <th>CAD</th>
+                    <th>NUM</th>
+                    <th>LPAREN</th>
+                    <th>RPAREN</th>
+                    <th>SIM</th>
+                    <th>TIPO</th>
+                </tr>`;
+            document.querySelector('textarea[name="codigo"]').value = '';
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container"></div>
+    <h1 class="titulo">Compilador Léxico</h1>
+    <form action="/analizar" method="post">
+        <textarea name="codigo" rows="10" cols="50"></textarea><br>
+        <input class="button" type="submit" value="Análisis Léxico">
+        <input class="button" type="reset" value="Limpiar">
+    </form>
+
+    {% if tokens %}
+    <h2>Tokens</h2>
+    <table id="tokenTable" border="1">
+        <tr>
+            <th>TOKEN</th>
+            <th>PR</th>
+            <th>ERROR</th>
+            <th>CAD</th>
+            <th>LPAREN</th>
+            <th>RPAREN</th>
+            <th>SIM</th>
+            <th>TIPO</th>
+        </tr>
+        {% for token in tokens %}
+        <tr>
+            <td>{{ token.type }}</td>
+            <td>{{ 'X' if token.type in pr else '' }}</td>
+            <td>{{ 'X' if token.type == 'ID' else '' }}</td>
+            <td>{{ 'X' if token.type == 'CADENA' else '' }}</td>
+            <td>{{ 'X' if token.type == 'LPAREN' else '' }}</td>
+            <td>{{ 'X' if token.type == 'RPAREN' else '' }}</td>
+            <td>{{ 'X' if token.type in symbols else '' }}</td>
+            <td>{{ token.value }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><strong>Total</strong></td>
+            <td>{{ counts.pr_count }}</td>
+            <td>{{ counts.id_count }}</td>
+            <td>{{ counts.cad_count }}</td>
+            <td>{{ counts.lparen_count }}</td>
+            <td>{{ counts.rparen_count }}</td>
+            <td>{{ counts.simb_count }}</td>
+            <td></td>
+        </tr>
+    </table>
+
+    </div>
+    <button class="button" type="button" onclick="clearTable()">Limpiar Tabla</button>
+    {% endif %}
+</body>
+</html>
