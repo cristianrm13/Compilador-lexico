@@ -35,7 +35,7 @@ def analizar():
             simb_count += 1
 
     pr = {'PROGRAMA', 'INT', 'READ', 'PRINTF', 'A', 'B', 'C', 'SUMA', 'RESTA', 'END'}
-    symbols = {'PLUS', 'SEMI','EQUAL','LLAVES'}
+    symbols = {'PLUS', 'SEMI','EQUAL','LBRACE', 'RBRACE'}
     counts = {'pr_count': pr_count, 'id_count': id_count, 'cad_count': cad_count, 'num_count': num_count, 'lparen_count': lparen_count, 'rparen_count': rparen_count, 'simb_count': simb_count}
     
     return render_template('index.html', tokens=tokens, pr=pr, symbols=symbols, counts=counts)
